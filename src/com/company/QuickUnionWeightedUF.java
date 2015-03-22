@@ -15,10 +15,13 @@ public class QuickUnionWeightedUF
         }
     }
 
-    private int root (int p)
+    private int root (int p)    // Simple one-pass variant (grandparent)
     {
         while ( id[p] != p )
+        {
+            id[p] = id[id[p]];
             p = id[p];
+        }
         return p;
     }
 
