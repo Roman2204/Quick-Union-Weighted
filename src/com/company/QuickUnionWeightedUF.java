@@ -15,14 +15,20 @@ public class QuickUnionWeightedUF
         }
     }
 
-    private int root (int p)    // Simple one-pass variant (grandparent)
+    private int root (int p)    // Two-pass implementation (path compression)
     {
+        int p_root = p;
+        while ( id[p_root] != p_root )
+            p_root = id[p_root];
+
         while ( id[p] != p )
         {
-            id[p] = id[id[p]];
-            p = id[p];
+            int p_new = id[p];
+            id[p] = p_root;
+            p = p_new;
         }
-        return p;
+
+        return p_root;
     }
 
     public boolean connected (int p, int q)
@@ -69,7 +75,6 @@ public class QuickUnionWeightedUF
         QuickUnionWeighted1.union(6, 5);
         QuickUnionWeighted1.union(9, 4);
         QuickUnionWeighted1.union(2, 1);
-        QuickUnionWeighted1.printIDs();
         QuickUnionWeighted1.union(5, 0);
         QuickUnionWeighted1.union(7, 2);
         QuickUnionWeighted1.union(6, 1);
